@@ -44,7 +44,6 @@ export const TokenSelector = () => {
 
   return (
     <div className='container flex mx-auto px-4 mt-20'>
-      {/* card */}
       <div className='bg-white rounded-2xl shadow-sm border w-full max-w-md mx-auto'>
         <TokenInput
           label='Base token'
