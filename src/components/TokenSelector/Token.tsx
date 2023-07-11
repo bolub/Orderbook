@@ -14,7 +14,6 @@ export const Token = ({
       onClick={onClick}
       className='flex space-x-2 py-2 hover:bg-gray-100 cursor-pointer px-6'
     >
-      {/* <span className='rounded-full h-10 w-10 bg-purple-400'></span> */}
       <Image
         src={token.img}
         width={40}
