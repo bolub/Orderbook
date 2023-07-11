@@ -1,6 +1,7 @@
 import { HiOutlineChevronDown } from 'react-icons/hi';
 import { useState } from 'react';
 import { useTokenModal } from '@/components/TokenSelector/useTokenModal';
+import Image from 'next/image';
 
 export type TokenType = {
   ticker: string;
@@ -55,7 +56,15 @@ const Selected = ({
         onClick={openModal}
         className='bg-primary-main rounded-full pl-2 py-2 pr-4 flex mt-2 w-fit items-center space-x-2 cursor-pointer'
       >
-        <span className='w-6 h-6 rounded-full bg-white'></span>
+        {selectedToken && (
+          <Image
+            width={28}
+            height={28}
+            src={selectedToken.img}
+            alt={selectedToken.name}
+            className='rounded-full bg-purple-400 object-cover'
+          />
+        )}
 
         <span className='mt-1'>{selectedToken?.ticker}</span>
 

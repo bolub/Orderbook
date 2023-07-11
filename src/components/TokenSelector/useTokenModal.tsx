@@ -76,8 +76,7 @@ export const useTokenModal = () => {
                               action && action(token);
                               closeModal();
                             }}
-                            name={token.name}
-                            symbol={token.ticker}
+                            token={token}
                           />
                         );
                       })}
