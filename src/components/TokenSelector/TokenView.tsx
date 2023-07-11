@@ -1,5 +1,5 @@
 import { HiOutlineChevronDown } from 'react-icons/hi';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { useTokenModal } from '@/components/TokenSelector/useTokenModal';
 import Image from 'next/image';
 
@@ -79,11 +79,13 @@ const Selected = ({
   );
 };
 
-export const TokenView = () => {
-  const [selectedToken, setSelectedToken] = useState<TokenType | undefined>(
-    undefined
-  );
-
+export const TokenView = ({
+  setSelectedToken,
+  selectedToken,
+}: {
+  selectedToken?: TokenType;
+  setSelectedToken: Dispatch<SetStateAction<TokenType | undefined>>;
+}) => {
   return (
     <>
       {selectedToken ? (
