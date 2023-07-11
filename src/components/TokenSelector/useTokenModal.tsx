@@ -3,6 +3,7 @@ import { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { Token } from '@/components/TokenSelector/Token';
 import { TokenType } from '@/components/TokenSelector/TokenView';
+import { tokenList } from '@/data/tokenList';
 
 export const useTokenModal = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -67,10 +68,7 @@ export const useTokenModal = () => {
                     </p>
 
                     <div className='mt-4 flex flex-col pb-4 overflow-y-auto h-full max-h-[40vh]'>
-                      {[
-                        { name: 'Bitcoin', symbol: 'BTC' },
-                        { name: 'Ethereum', symbol: 'ETH' },
-                      ].map((token) => {
+                      {tokenList.map((token) => {
                         return (
                           <Token
                             key={token.name}
@@ -79,7 +77,7 @@ export const useTokenModal = () => {
                               closeModal();
                             }}
                             name={token.name}
-                            symbol={token.symbol}
+                            symbol={token.ticker}
                           />
                         );
                       })}
