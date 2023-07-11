@@ -66,7 +66,6 @@ export const useTokenModal = () => {
                       Trending Tokens
                     </p>
 
-                    {/* token list */}
                     <div className='mt-4 flex flex-col pb-4 overflow-y-auto h-full max-h-[40vh]'>
                       {[
                         { name: 'Bitcoin', symbol: 'BTC' },
@@ -76,7 +75,6 @@ export const useTokenModal = () => {
                           <Token
                             key={token.name}
                             onClick={() => {
-                              // setSelectedToken(token);
                               action && action(token);
                               closeModal();
                             }}
