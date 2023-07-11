@@ -1,7 +1,7 @@
 // Configure automatic class format
-import { getOrderbookData } from '@/API/orderbook';
-import { TokenType, TokenView } from '@/components/TokenSelector/TokenView';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { getOrderbookData } from "@/API/orderbook";
+import { TokenType, TokenView } from "@/components/TokenSelector/TokenView";
+import { Dispatch, SetStateAction, useState } from "react";
 
 const TokenInput = ({
   token,
@@ -13,8 +13,8 @@ const TokenInput = ({
   setToken: Dispatch<SetStateAction<TokenType | undefined>>;
 }) => {
   return (
-    <div className='px-6 pt-6 pb-5 border-b border-gray-200'>
-      <label className='text-sm' htmlFor='token'>
+    <div className="border-b border-gray-200 px-6 pb-5 pt-6">
+      <label className="text-sm" htmlFor="token">
         {label}
       </label>
 
@@ -43,23 +43,23 @@ export const TokenSelector = () => {
   };
 
   return (
-    <div className='container flex mx-auto px-4 mt-20'>
-      <div className='bg-white rounded-2xl shadow-sm border w-full max-w-md mx-auto'>
+    <div className="container mx-auto mt-20 flex px-4">
+      <div className="mx-auto w-full max-w-md rounded-2xl border bg-white shadow-sm">
         <TokenInput
-          label='Base token'
+          label="Base token"
           token={baseToken}
           setToken={setBaseToken}
         />
         <TokenInput
-          label='Quote Token'
+          label="Quote Token"
           token={quoteToken}
           setToken={setQuoteToken}
         />
 
-        <div className='p-6'>
+        <div className="p-6">
           <button
             onClick={handleOrderbookData}
-            className='w-full rounded-lg p-3 bg-black hover:bg-gray-800 transition-all focus:ring-1 focus:ring-black focus:ring-offset-2 text-white'
+            className="w-full rounded-lg bg-black p-3 text-white transition-all hover:bg-gray-800 focus:ring-1 focus:ring-black focus:ring-offset-2"
           >
             Get Ordebook Data
           </button>

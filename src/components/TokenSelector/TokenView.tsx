@@ -1,7 +1,7 @@
-import { HiOutlineChevronDown } from 'react-icons/hi';
-import { Dispatch, SetStateAction } from 'react';
-import { useTokenModal } from '@/components/TokenSelector/useTokenModal';
-import Image from 'next/image';
+import { HiOutlineChevronDown } from "react-icons/hi";
+import { Dispatch, SetStateAction } from "react";
+import { useTokenModal } from "@/components/TokenSelector/useTokenModal";
+import Image from "next/image";
 
 export type TokenType = {
   ticker: string;
@@ -22,11 +22,11 @@ const NotSelected = ({
     <>
       <div
         onClick={openModal}
-        className='bg-primary-main rounded-full py-2 px-4 w-fit cursor-pointer flex mt-2 justify-center items-center space-x-2'
+        className="mt-2 flex w-fit cursor-pointer items-center justify-center space-x-2 rounded-full bg-primary-main px-4 py-2"
       >
-        <span className='mt-1'>Select Token</span>
+        <span className="mt-1">Select Token</span>
 
-        <span className='text-sm'>
+        <span className="text-sm">
           <HiOutlineChevronDown />
         </span>
       </div>
@@ -53,19 +53,19 @@ const Selected = ({
     <>
       <div
         onClick={openModal}
-        className='bg-primary-main rounded-full pl-2 py-2 pr-4 flex mt-2 w-fit items-center space-x-2 cursor-pointer'
+        className="mt-2 flex w-fit cursor-pointer items-center space-x-2 rounded-full bg-primary-main py-2 pl-2 pr-4"
       >
         <Image
           width={28}
           height={28}
           src={selectedToken.img}
           alt={selectedToken.name}
-          className='rounded-full bg-purple-400 object-cover'
+          className="rounded-full bg-purple-400 object-cover"
         />
 
-        <span className='mt-1'>{selectedToken?.ticker}</span>
+        <span className="mt-1">{selectedToken?.ticker}</span>
 
-        <span className='text-sm ml-2'>
+        <span className="ml-2 text-sm">
           <HiOutlineChevronDown />
         </span>
       </div>
