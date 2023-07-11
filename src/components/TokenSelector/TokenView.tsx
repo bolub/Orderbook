@@ -1,5 +1,5 @@
 import { HiOutlineChevronDown } from 'react-icons/hi';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 import { useTokenModal } from '@/components/TokenSelector/useTokenModal';
 import Image from 'next/image';
 
