@@ -17,6 +17,15 @@ export const useTokenModal = () => {
   };
 
   const TokenModal = ({ action }: { action?: (token: TokenType) => void }) => {
+    const [searchValue, setSearchValue] = useState('');
+
+    const filteredTokenList = tokenList.filter((token) => {
+      return (
+        token.name.toLowerCase().includes(searchValue.toLowerCase()) ||
+        token.ticker.toLowerCase().includes(searchValue.toLowerCase())
+      );
+    });
+
     return (
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as='div' className='relative z-10' onClose={closeModal}>
@@ -52,6 +61,8 @@ export const useTokenModal = () => {
                     <input
                       className='w-full h-full focus:outline-none py-5 pl-7'
                       placeholder='Search token or paste address'
+                      value={searchValue}
+                      onChange={(e) => setSearchValue(e.target.value)}
                     />
 
                     <button
@@ -68,7 +79,7 @@ export const useTokenModal = () => {
                     </p>
 
                     <div className='mt-4 flex flex-col pb-4 overflow-y-auto h-full max-h-[40vh]'>
-                      {tokenList.map((token) => {
+                      {filteredTokenList.map((token) => {
                         return (
                           <Token
                             key={token.name}
