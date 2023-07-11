@@ -1,5 +1,5 @@
-import { OrderBook } from '@/entities/orderbook';
-import API from '.';
+import { OrderBook } from "@/entities/orderbook";
+import API from ".";
 
 type Data = {
   orderbook: (args: {
@@ -8,12 +8,12 @@ type Data = {
   }) => Promise<OrderBook>;
 };
 
-export const getOrderbookData: Data['orderbook'] = async ({
+export const getOrderbookData: Data["orderbook"] = async ({
   baseToken,
   quoteToken,
 }) => {
   const response = await API.get(
-    `?baseToken=${baseToken}&quoteToken=${quoteToken}`
+    `?baseToken=${baseToken}&quoteToken=${quoteToken}`,
   );
 
   return response.data;

@@ -4,7 +4,7 @@
 
 @layer base {
   html {
-    font-family: 'League Spartan', system-ui, sans-serif;
+    font-family: "League Spartan", system-ui, sans-serif;
   }
 }
 
@@ -23,7 +23,7 @@
 }
 
 body {
-  background-color: #FAFAFA
+  background-color: #fafafa;
   /* color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
