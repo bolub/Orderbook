@@ -79,11 +79,13 @@ const Selected = ({
   );
 };
 
-export const TokenView = () => {
-  const [selectedToken, setSelectedToken] = useState<TokenType | undefined>(
-    undefined
-  );
-
+export const TokenView = ({
+  setSelectedToken,
+  selectedToken,
+}: {
+  selectedToken?: TokenType;
+  setSelectedToken: Dispatch<SetStateAction<TokenType | undefined>>;
+}) => {
   return (
     <>
       {selectedToken ? (
