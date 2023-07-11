@@ -45,7 +45,7 @@ const Selected = ({
   selectedToken,
   setSelectedToken,
 }: {
-  selectedToken?: TokenType;
+  selectedToken: TokenType;
   setSelectedToken: any;
 }) => {
   const { openModal, TokenModal } = useTokenModal();
@@ -56,15 +56,13 @@ const Selected = ({
         onClick={openModal}
         className='bg-primary-main rounded-full pl-2 py-2 pr-4 flex mt-2 w-fit items-center space-x-2 cursor-pointer'
       >
-        {selectedToken && (
-          <Image
-            width={28}
-            height={28}
-            src={selectedToken.img}
-            alt={selectedToken.name}
-            className='rounded-full bg-purple-400 object-cover'
-          />
-        )}
+        <Image
+          width={28}
+          height={28}
+          src={selectedToken.img}
+          alt={selectedToken.name}
+          className='rounded-full bg-purple-400 object-cover'
+        />
 
         <span className='mt-1'>{selectedToken?.ticker}</span>
 
