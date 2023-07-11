@@ -1,4 +1,4 @@
-import { TokenSelector } from '@/components/TokenSelector';
+import { TokenSelector } from '@/components/TokenSelector/TokenSelector';
 
 export default function Home() {
   return (

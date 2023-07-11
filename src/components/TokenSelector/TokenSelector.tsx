@@ -1,5 +1,5 @@
 // Configure automatic class format
-import { HiOutlineChevronDown } from 'react-icons/hi';
+import { TokenView } from '@/components/TokenSelector/TokenView';
 
 const TokenInput = () => {
   return (
@@ -8,21 +8,7 @@ const TokenInput = () => {
         Pay with
       </label>
 
-      {/* When token is selected */}
-      {/* <div className='bg-primary-main rounded-full pl-2 py-2 pr-8 flex mt-2 w-fit items-center space-x-2'>
-        <span className='w-6 h-6 rounded-full bg-white'></span>
-
-        <span className='my-auto'>DOGJAK</span>
-      </div> */}
-
-      {/* When token is not selected */}
-      <div className='bg-primary-main rounded-full py-2 px-1 w-full max-w-[150px] cursor-pointer flex mt-2 justify-center items-center space-x-2'>
-        <span className='mt-1'>Select Token</span>
-
-        <span className='text-sm'>
-          <HiOutlineChevronDown />
-        </span>
-      </div>
+      <TokenView />
 
       <div className='flex mt-6 w-full items-center justify-between'>
         <input
