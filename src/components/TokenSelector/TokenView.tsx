@@ -3,8 +3,11 @@ import { useState } from 'react';
 import { useTokenModal } from '@/components/TokenSelector/useTokenModal';
 
 export type TokenType = {
+  ticker: string;
+  img: string;
   name: string;
-  symbol: string;
+  address: string;
+  decimals: number;
 };
 
 const NotSelected = ({
@@ -19,7 +22,7 @@ const NotSelected = ({
     <>
       <div
         onClick={openModal}
-        className='bg-primary-main rounded-full py-2 px-1 w-full max-w-[150px] cursor-pointer flex mt-2 justify-center items-center space-x-2'
+        className='bg-primary-main rounded-full py-2 px-4 w-fit cursor-pointer flex mt-2 justify-center items-center space-x-2'
       >
         <span className='mt-1'>Select Token</span>
 
@@ -50,13 +53,11 @@ const Selected = ({
     <>
       <div
         onClick={openModal}
-        className='bg-primary-main rounded-full pl-2 py-2 pr-8 flex mt-2 w-fit items-center space-x-2 cursor-pointer'
+        className='bg-primary-main rounded-full pl-2 py-2 pr-4 flex mt-2 w-fit items-center space-x-2 cursor-pointer'
       >
         <span className='w-6 h-6 rounded-full bg-white'></span>
 
-        <span className='mt-1'>
-          {selectedToken?.name} ({selectedToken?.symbol})
-        </span>
+        <span className='mt-1'>{selectedToken?.ticker}</span>
 
         <span className='text-sm ml-2'>
           <HiOutlineChevronDown />
