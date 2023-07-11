@@ -1,7 +1,9 @@
+import { TokenSelector } from '@/components/TokenSelector';
+
 export default function Home() {
   return (
-    <main>
-      <h1 className='p-6 text-base'></h1>
+    <main className='h-full'>
+      <TokenSelector />
     </main>
   );
 }
