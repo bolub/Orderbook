@@ -13,7 +13,7 @@ type Tokens = () => Promise<TokenType[]>;
 
 export const getTokensList: Tokens = async () => {
   const response = await axios.get(
-    "http://tokens.coingecko.com/uniswap/all.json"
+    "https://tokens.coingecko.com/uniswap/all.json"
   );
 
   return response.data.tokens;
