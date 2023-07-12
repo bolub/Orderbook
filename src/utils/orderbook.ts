@@ -13,13 +13,14 @@ export const parseMerchantData = (records: RecordType[]): Merchant[] => {
     const price =
       parseFloat(record.order.takerAmount) /
       parseFloat(record.order.makerAmount);
+
     const quantity = parseFloat(record.order.takerAmount);
     const total = price * quantity;
 
     const merchantOrder = {
-      price,
-      quantity,
-      total,
+      price: parseFloat(price.toFixed(2)),
+      quantity: parseFloat(quantity.toFixed(2)),
+      total: parseFloat(total.toFixed(2)),
     };
 
     data.push(merchantOrder);
