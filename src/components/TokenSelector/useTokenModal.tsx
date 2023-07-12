@@ -92,30 +92,33 @@ export const useTokenModal = () => {
                     </button>
                   </Dialog.Title>
 
-                  <div className="mt-4">
-                    <p className="mb-4 px-6 text-sm text-gray-500">
-                      Trending Tokens
-                    </p>
-
+                  <div className="">
                     {isLoading && (
-                      <p className="px-6 py-3">Getting tokens...</p>
+                      <p className="my-12 px-6 text-center text-sm">
+                        Getting tokens...
+                      </p>
                     )}
 
                     {!isLoading && tokenList && (
-                      <div className="flex h-full max-h-[40vh] flex-col overflow-y-auto pb-4">
-                        {filteredTokenList.map((token) => {
-                          return (
-                            <Token
-                              key={token.name}
-                              onClick={() => {
-                                action && action(token);
-                                closeModal();
-                              }}
-                              token={token}
-                            />
-                          );
-                        })}
-                      </div>
+                      <>
+                        <p className="my-4 px-6 text-sm text-gray-500">
+                          Trending Tokens
+                        </p>
+                        <div className="flex h-full max-h-[40vh] flex-col overflow-y-auto pb-4">
+                          {filteredTokenList.map((token) => {
+                            return (
+                              <Token
+                                key={token.name}
+                                onClick={() => {
+                                  action && action(token);
+                                  closeModal();
+                                }}
+                                token={token}
+                              />
+                            );
+                          })}
+                        </div>
+                      </>
                     )}
                   </div>
                 </Dialog.Panel>

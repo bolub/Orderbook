@@ -1,4 +1,4 @@
-import { Order, RecordType } from "@/entities/orderbook";
+import { Order, OrderBook, RecordType } from "@/entities/orderbook";
 
 interface Merchant {
   price: number;
@@ -6,24 +6,38 @@ interface Merchant {
   total: number;
 }
 
-export const parseMerchantData = (records: RecordType[]): Merchant[] => {
-  let data: Merchant[] = [];
+export const parseMerchantData = (data: OrderBook) => {
+  const book: {
+    asks: any;
+    bids: any;
+  } = {
+    asks: [],
+    bids: [],
+  };
 
-  records.forEach((record) => {
-    const price =
+  // Refactor sellers' data (asks)
+  data.asks.records.forEach((record) => {
+    const price = (
       parseFloat(record.order.takerAmount) /
-      parseFloat(record.order.makerAmount);
-    const quantity = parseFloat(record.order.takerAmount);
-    const total = price * quantity;
+      parseFloat(record.order.makerAmount)
+    ).toFixed(2);
+    const quantity = parseFloat(record.order.takerAmount).toString();
 
-    const merchantOrder = {
-      price,
-      quantity,
-      total,
-    };
-
-    data.push(merchantOrder);
+    const sellerOrder = [price, quantity];
+    book.asks.push(sellerOrder);
   });
 
-  return data;
+  // Refactor buyers' data (bids)
+  data.bids.records.forEach((record) => {
+    const price = (
+      parseFloat(record.order.makerAmount) /
+      parseFloat(record.order.takerAmount)
+    ).toFixed(2);
+    const quantity = parseFloat(record.order.makerAmount).toString();
+
+    const buyerOrder = [price, quantity];
+    book.bids.push(buyerOrder);
+  });
+
+  return book;
 };
