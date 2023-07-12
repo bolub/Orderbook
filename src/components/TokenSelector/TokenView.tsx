@@ -2,14 +2,7 @@ import { HiOutlineChevronDown } from "react-icons/hi";
 import { Dispatch, SetStateAction } from "react";
 import { useTokenModal } from "@/components/TokenSelector/useTokenModal";
 import Image from "next/image";
-
-export type TokenType = {
-  ticker: string;
-  img: string;
-  name: string;
-  address: string;
-  decimals: number;
-};
+import { TokenType } from "@/API/tokens";
 
 const NotSelected = ({
   setSelectedToken,
@@ -58,12 +51,12 @@ const Selected = ({
         <Image
           width={28}
           height={28}
-          src={selectedToken.img}
+          src={selectedToken.logoURI}
           alt={selectedToken.name}
           className="rounded-full bg-purple-400 object-cover"
         />
 
-        <span className="mt-1">{selectedToken?.ticker}</span>
+        <span className="mt-1">{selectedToken?.symbol}</span>
 
         <span className="ml-2 text-sm">
           <HiOutlineChevronDown />

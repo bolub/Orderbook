@@ -1,9 +1,10 @@
 // Configure automatic class format
 import { getOrderbookData } from "@/API/orderbook";
-import { TokenType, TokenView } from "@/components/TokenSelector/TokenView";
 import { OrderBook } from "@/entities/orderbook";
 import { Dispatch, SetStateAction, useState } from "react";
 import { OrderBookTable } from "./OrderBookTable";
+import { TokenType } from "@/API/tokens";
+import { TokenView } from "@/components/TokenSelector/TokenView";
 
 const TokenInput = ({
   token,
