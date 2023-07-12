@@ -49,6 +49,7 @@ export const OrderBookTable = ({
           showHeaders
         />
 
+        {/*  */}
         {/* <div className="flex h-full w-full">
           {/* buyers */}
         {/* <div className="w-1/2 border-r pr-4 pt-6">
