@@ -1,9 +1,8 @@
 import { HiOutlineX, HiSearch } from "react-icons/hi";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Token } from "@/components/TokenSelector/Token";
-import { TokenType } from "@/components/TokenSelector/TokenView";
-import { tokenList } from "@/data/tokenList";
+import { TokenType, getTokensList } from "@/API/tokens";
 
 export const useTokenModal = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,13 +17,32 @@ export const useTokenModal = () => {
 
   const TokenModal = ({ action }: { action?: (token: TokenType) => void }) => {
     const [searchValue, setSearchValue] = useState("");
+    const [tokenList, setTokenList] = useState<TokenType[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
 
-    const filteredTokenList = tokenList.filter((token) => {
-      return (
-        token.name.toLowerCase().includes(searchValue.toLowerCase()) ||
-        token.ticker.toLowerCase().includes(searchValue.toLowerCase())
-      );
-    });
+    useEffect(() => {
+      const tokensFetch = async () => {
+        setIsLoading(true);
+
+        const data = await getTokensList();
+        setIsLoading(false);
+        setTokenList(data);
+      };
+      tokensFetch();
+    }, []);
+
+    const filteredTokenList = useMemo(() => {
+      const f = tokenList.filter((token) => {
+        return (
+          token.name.toLowerCase().includes(searchValue.toLowerCase()) ||
+          token.symbol.toLowerCase().includes(searchValue.toLowerCase())
+        );
+      });
+
+      return f;
+    }, [searchValue, tokenList]);
+
+    console.log(filteredTokenList);
 
     return (
       <Transition appear show={isOpen} as={Fragment}>
@@ -63,6 +81,7 @@ export const useTokenModal = () => {
                       placeholder="Search token or paste address"
                       value={searchValue}
                       onChange={(e) => setSearchValue(e.target.value)}
+                      disabled={!tokenList}
                     />
 
                     <button
@@ -74,24 +93,30 @@ export const useTokenModal = () => {
                   </Dialog.Title>
 
                   <div className="mt-4">
-                    <p className="px-6 text-sm text-gray-500">
+                    <p className="mb-4 px-6 text-sm text-gray-500">
                       Trending Tokens
                     </p>
 
-                    <div className="mt-4 flex h-full max-h-[40vh] flex-col overflow-y-auto pb-4">
-                      {filteredTokenList.map((token) => {
-                        return (
-                          <Token
-                            key={token.name}
-                            onClick={() => {
-                              action && action(token);
-                              closeModal();
-                            }}
-                            token={token}
-                          />
-                        );
-                      })}
-                    </div>
+                    {isLoading && (
+                      <p className="px-6 py-3">Getting tokens...</p>
+                    )}
+
+                    {!isLoading && tokenList && (
+                      <div className="flex h-full max-h-[40vh] flex-col overflow-y-auto pb-4">
+                        {filteredTokenList.map((token) => {
+                          return (
+                            <Token
+                              key={token.name}
+                              onClick={() => {
+                                action && action(token);
+                                closeModal();
+                              }}
+                              token={token}
+                            />
+                          );
+                        })}
+                      </div>
+                    )}
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
