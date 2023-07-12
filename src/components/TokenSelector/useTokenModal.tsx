@@ -21,6 +21,7 @@ export const useTokenModal = () => {
     const { data: tokenList, isLoading } = useQuery({
       queryKey: ["tokensList"],
       queryFn: getTokensList,
+      enabled: isOpen,
     });
 
     const filteredTokenList = useMemo(() => {
