@@ -38,8 +38,9 @@ export const OrderBookTable = ({
         Go Back
       </button>
 
-      <div className="h-full rounded-2xl border bg-white px-4 shadow-sm">
+      <div className="h-full w-full rounded-2xl border bg-white px-4 shadow-sm">
         <OrderBook
+          layout="row"
           book={book}
           fullOpacity
           interpolateColor={(color) => color}
