@@ -4,6 +4,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Token } from "@/components/TokenSelector/Token";
 import { TokenType, getTokensList } from "@/API/tokens";
 import { useQuery } from "@tanstack/react-query";
+import { useDebounce } from "react-use";
 
 export const useTokenModal = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,24 +19,34 @@ export const useTokenModal = () => {
 
   const TokenModal = ({ action }: { action?: (token: TokenType) => void }) => {
     const [searchValue, setSearchValue] = useState("");
+    const [debouncedValue, setDebouncedValue] = useState("");
+
     const { data: tokenList, isLoading } = useQuery({
       queryKey: ["tokensList"],
       queryFn: getTokensList,
       enabled: isOpen,
     });
 
+    const [, cancel] = useDebounce(
+      () => {
+        setDebouncedValue(searchValue);
+      },
+      900,
+      [searchValue]
+    );
+
     const filteredTokenList = useMemo(() => {
       if (!tokenList) return [];
 
       const f = tokenList.filter((token) => {
         return (
-          token.name.toLowerCase().includes(searchValue.toLowerCase()) ||
-          token.symbol.toLowerCase().includes(searchValue.toLowerCase())
+          token.name.toLowerCase().includes(debouncedValue.toLowerCase()) ||
+          token.symbol.toLowerCase().includes(debouncedValue.toLowerCase())
         );
       });
 
       return f;
-    }, [searchValue, tokenList]);
+    }, [debouncedValue, tokenList]);
 
     return (
       <Transition appear show={isOpen} as={Fragment}>
