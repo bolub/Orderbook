@@ -1,4 +1,4 @@
-import { Order, RecordType } from "@/entities/orderbook";
+import { RecordType } from "@/entities/orderbook";
 
 interface Merchant {
   price: number;
@@ -15,6 +15,7 @@ export const parseMerchantData = (records: RecordType[]): Merchant[] => {
       parseFloat(record.order.makerAmount);
 
     const quantity = parseFloat(record.order.takerAmount);
+
     const total = price * quantity;
 
     const merchantOrder = {

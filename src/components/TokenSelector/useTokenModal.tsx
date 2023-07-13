@@ -1,5 +1,5 @@
 import { HiOutlineX, HiSearch } from "react-icons/hi";
-import { Fragment, useEffect, useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Token } from "@/components/TokenSelector/Token";
 import { TokenType, getTokensList } from "@/API/tokens";
