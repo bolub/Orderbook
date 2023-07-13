@@ -1,7 +1,10 @@
 // Configure automatic class format
 import { getOrderbookData } from "@/API/orderbook";
-import { TokenType, TokenView } from "@/components/TokenSelector/TokenView";
+import { OrderBook } from "@/entities/orderbook";
 import { Dispatch, SetStateAction, useState } from "react";
+import { OrderBookTable } from "./OrderBookTable";
+import { TokenType } from "@/API/tokens";
+import { TokenView } from "@/components/TokenSelector/TokenView";
 
 const TokenInput = ({
   token,
@@ -27,6 +30,12 @@ export const TokenSelector = () => {
   const [baseToken, setBaseToken] = useState<TokenType | undefined>();
   const [quoteToken, setQuoteToken] = useState<TokenType | undefined>();
 
+  const [orderbookData, setOrderBookData] = useState<OrderBook>();
+
+  const resetOrderBookData = () => {
+    setOrderBookData(undefined);
+  };
+
   const handleOrderbookData = async () => {
     if (!baseToken || !quoteToken) return;
 
@@ -36,35 +45,45 @@ export const TokenSelector = () => {
         quoteToken: quoteToken?.address,
       });
 
-      console.log(data);
+      setOrderBookData(data);
     } catch (error) {
       console.log(error);
     }
   };
 
   return (
-    <div className="container mx-auto mt-20 flex px-4">
-      <div className="mx-auto w-full max-w-md rounded-2xl border bg-white shadow-sm">
-        <TokenInput
-          label="Base token"
-          token={baseToken}
-          setToken={setBaseToken}
-        />
-        <TokenInput
-          label="Quote Token"
-          token={quoteToken}
-          setToken={setQuoteToken}
-        />
+    <>
+      <div className="container mx-auto flex px-4">
+        {/* selector */}
+        {!orderbookData && (
+          <div className="mx-auto mt-20 w-full max-w-md rounded-2xl border bg-white shadow-sm">
+            <TokenInput
+              label="Base token"
+              token={baseToken}
+              setToken={setBaseToken}
+            />
+            <TokenInput
+              label="Quote Token"
+              token={quoteToken}
+              setToken={setQuoteToken}
+            />
 
-        <div className="p-6">
-          <button
-            onClick={handleOrderbookData}
-            className="w-full rounded-lg bg-black p-3 text-white transition-all hover:bg-gray-800 focus:ring-1 focus:ring-black focus:ring-offset-2"
-          >
-            Get Ordebook Data
-          </button>
-        </div>
+            <div className="p-6">
+              <button
+                onClick={handleOrderbookData}
+                className="w-full rounded-lg bg-black p-3 text-white transition-all hover:bg-gray-800 focus:ring-1 focus:ring-black focus:ring-offset-2"
+              >
+                Get Ordebook Data
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* display */}
+        {orderbookData && (
+          <OrderBookTable data={orderbookData} goBack={resetOrderBookData} />
+        )}
       </div>
-    </div>
+    </>
   );
 };

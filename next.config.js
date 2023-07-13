@@ -4,8 +4,12 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: '**.moralis.io',
+        protocol: "https",
+        hostname: "**.moralis.io/**",
+      },
+      {
+        protocol: "https",
+        hostname: "assets.coingecko.com/**",
       },
     ],
   },

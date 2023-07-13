@@ -1,9 +1,10 @@
 import { HiOutlineX, HiSearch } from "react-icons/hi";
-import { Fragment, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Token } from "@/components/TokenSelector/Token";
-import { TokenType } from "@/components/TokenSelector/TokenView";
-import { tokenList } from "@/data/tokenList";
+import { TokenType, getTokensList } from "@/API/tokens";
+import { useQuery } from "@tanstack/react-query";
+import { useDebounce } from "react-use";
 
 export const useTokenModal = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,13 +19,34 @@ export const useTokenModal = () => {
 
   const TokenModal = ({ action }: { action?: (token: TokenType) => void }) => {
     const [searchValue, setSearchValue] = useState("");
+    const [debouncedValue, setDebouncedValue] = useState("");
 
-    const filteredTokenList = tokenList.filter((token) => {
-      return (
-        token.name.toLowerCase().includes(searchValue.toLowerCase()) ||
-        token.ticker.toLowerCase().includes(searchValue.toLowerCase())
-      );
+    const { data: tokenList, isLoading } = useQuery({
+      queryKey: ["tokensList"],
+      queryFn: getTokensList,
+      enabled: isOpen,
     });
+
+    const [, cancel] = useDebounce(
+      () => {
+        setDebouncedValue(searchValue);
+      },
+      900,
+      [searchValue]
+    );
+
+    const filteredTokenList = useMemo(() => {
+      if (!tokenList) return [];
+
+      const f = tokenList.filter((token) => {
+        return (
+          token.name.toLowerCase().includes(debouncedValue.toLowerCase()) ||
+          token.symbol.toLowerCase().includes(debouncedValue.toLowerCase())
+        );
+      });
+
+      return f;
+    }, [debouncedValue, tokenList]);
 
     return (
       <Transition appear show={isOpen} as={Fragment}>
@@ -63,6 +85,7 @@ export const useTokenModal = () => {
                       placeholder="Search token or paste address"
                       value={searchValue}
                       onChange={(e) => setSearchValue(e.target.value)}
+                      disabled={!tokenList}
                     />
 
                     <button
@@ -74,24 +97,34 @@ export const useTokenModal = () => {
                   </Dialog.Title>
 
                   <div className="mt-4">
-                    <p className="px-6 text-sm text-gray-500">
-                      Trending Tokens
-                    </p>
+                    {isLoading && (
+                      <p className="my-12 px-6 text-center text-sm">
+                        Getting tokens...
+                      </p>
+                    )}
 
-                    <div className="mt-4 flex h-full max-h-[40vh] flex-col overflow-y-auto pb-4">
-                      {filteredTokenList.map((token) => {
-                        return (
-                          <Token
-                            key={token.name}
-                            onClick={() => {
-                              action && action(token);
-                              closeModal();
-                            }}
-                            token={token}
-                          />
-                        );
-                      })}
-                    </div>
+                    {!isLoading && tokenList && (
+                      <>
+                        <p className="my-4 px-6 text-sm text-gray-500">
+                          Trending Tokens
+                        </p>
+
+                        <div className="flex h-full max-h-[40vh] flex-col overflow-y-auto pb-4">
+                          {filteredTokenList.map((token) => {
+                            return (
+                              <Token
+                                key={token.name}
+                                onClick={() => {
+                                  action && action(token);
+                                  closeModal();
+                                }}
+                                token={token}
+                              />
+                            );
+                          })}
+                        </div>
+                      </>
+                    )}
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

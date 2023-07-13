@@ -1,37 +1,11 @@
-interface Signature {
-  signatureType: number;
-  r: string;
-  s: string;
-  v: number;
-}
-
-interface Order {
-  signature: Signature;
-  sender: string;
-  maker: string;
-  taker: string;
+export interface Order {
   takerTokenFeeAmount: string;
   makerAmount: string;
   takerAmount: string;
-  makerToken: string;
-  takerToken: string;
-  salt: string;
-  verifyingContract: string;
-  feeRecipient: string;
-  expiry: string;
-  chainId: number;
-  pool: string;
 }
 
-interface MetaData {
-  orderHash: string;
-  remainingFillableTakerAmount: string;
-  createdAt: string;
-}
-
-interface RecordType {
+export interface RecordType {
   order: Order;
-  metaData: MetaData;
 }
 
 interface Bids {
@@ -52,3 +26,7 @@ export interface OrderBook {
   bids: Bids;
   asks: Asks;
 }
+
+// price = takerAmount / makerAmount
+// quantity === makerAmount
+// total = price * makerAmount
