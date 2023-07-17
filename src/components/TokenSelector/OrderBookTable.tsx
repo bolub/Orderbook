@@ -1,26 +1,29 @@
 import { OrderBook } from "@/entities/orderbook";
 import { parseMerchantData } from "@/utils/orderbook";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 import { HiOutlineChevronLeft } from "react-icons/hi";
 
-export const OrderBookTable = ({
-  data,
-  goBack,
-}: {
-  data: OrderBook;
-  goBack: () => void;
-}) => {
+export const OrderBookTable = ({ data }: { data: OrderBook }) => {
   const buyers = parseMerchantData(data.bids.records);
   const sellers = parseMerchantData(data.asks.records);
 
+  const router = useRouter();
+  let backPath = `/?tokens=${router.query.tokens}`;
+
+  console.log(data);
+
   return (
-    <div className="mx-auto mb-10 min-h-[70vh] w-full max-w-[800px]">
-      <button onClick={goBack} className="mb-4 flex items-center text-sm">
-        <span className="mr-2">
-          <HiOutlineChevronLeft />
-        </span>
-        Go Back
-      </button>
+    <div className="mx-auto mb-10 min-h-[70vh] w-full">
+      <Link href={backPath}>
+        <button className="mb-4 flex items-center text-sm">
+          <span className="mr-2">
+            <HiOutlineChevronLeft />
+          </span>
+          Go Back
+        </button>
+      </Link>
 
       <div className="h-full rounded-2xl border bg-white shadow-sm">
         <div className="flex h-full w-full">

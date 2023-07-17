@@ -6,26 +6,39 @@ interface Merchant {
   total: number;
 }
 
-export const parseMerchantData = (records: RecordType[]): Merchant[] => {
-  let data: Merchant[] = [];
+const formatPrice = (arg: number): string => {
+  return arg.toLocaleString("en", {
+    useGrouping: true,
+    minimumFractionDigits: 2,
+  });
+};
 
-  records.forEach((record) => {
-    const price =
-      parseFloat(record.order.takerAmount) /
-      parseFloat(record.order.makerAmount);
+export const formatNumber = (arg: number): string => {
+  return new Intl.NumberFormat("en-US").format(arg);
+};
 
-    const quantity = parseFloat(record.order.takerAmount);
+export const parseMerchantData = (records: RecordType[]) => {
+  const parsedData = [];
 
-    const total = price * quantity;
+  for (const record of records) {
+    const makerAmount = Number(record.order.makerAmount);
+    const takerAmount = Number(record.order.takerAmount);
+    const remainingFillableTakerAmount = Number(
+      record.metaData.remainingFillableTakerAmount
+    );
 
-    const merchantOrder = {
-      price: parseFloat(price.toFixed(2)),
-      quantity: parseFloat(quantity.toFixed(2)),
-      total: parseFloat(total.toFixed(2)),
+    const price = takerAmount / makerAmount;
+    const quantity = remainingFillableTakerAmount / makerAmount;
+    const total = remainingFillableTakerAmount;
+
+    const parsedRecord = {
+      price,
+      quantity,
+      total,
     };
 
-    data.push(merchantOrder);
-  });
+    parsedData.push(parsedRecord);
+  }
 
-  return data;
+  return parsedData;
 };
