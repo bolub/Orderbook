@@ -23,10 +23,10 @@ export const OrderBookTable = ({ data }: { data: OrderBook }) => {
         </button>
       </Link>
 
-      <div className="h-full rounded-2xl border bg-white shadow-sm">
+      <div className="h-full rounded-md border bg-white shadow-sm">
         <div className="flex h-full w-full">
           {/* buyers */}
-          <div className="w-1/2 border-r pt-6">
+          <div className="w-1/2 border-r pt-4">
             <table className="w-full table-auto">
               <thead>
                 <tr>
