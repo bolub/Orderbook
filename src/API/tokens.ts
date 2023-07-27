@@ -1,7 +1,6 @@
-import axios from "axios";
+import { tokenList } from "@/data/tokenList";
 
 export type TokenType = {
-  chainId: number;
   address: string;
   name: string;
   symbol: string;
@@ -12,9 +11,9 @@ export type TokenType = {
 type Tokens = () => Promise<TokenType[]>;
 
 export const getTokensList: Tokens = async () => {
-  const response = await axios.get(
-    "http://tokens.coingecko.com/uniswap/all.json"
-  );
+  // const response = await axios.get(
+  //   "http://tokens.coingecko.com/uniswap/all.json"
+  // );
 
-  return response.data.tokens;
+  return tokenList;
 };

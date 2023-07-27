@@ -1,31 +1,39 @@
 import { RecordType } from "@/entities/orderbook";
 
-interface Merchant {
-  price: number;
-  quantity: number;
-  total: number;
-}
+export const formatPrice = (arg: number): string => {
+  return arg.toLocaleString("en", {
+    useGrouping: true,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+};
 
-export const parseMerchantData = (records: RecordType[]): Merchant[] => {
-  let data: Merchant[] = [];
+export const formatNumber = (arg: number): string => {
+  return new Intl.NumberFormat("en-US").format(arg);
+};
 
-  records.forEach((record) => {
-    const price =
-      parseFloat(record.order.takerAmount) /
-      parseFloat(record.order.makerAmount);
+export const parseMerchantData = (records: RecordType[]) => {
+  const parsedData = [];
 
-    const quantity = parseFloat(record.order.takerAmount);
+  for (const record of records) {
+    const makerAmount = parseFloat(record.order.makerAmount);
+    const takerAmount = parseFloat(record.order.takerAmount);
+    const remainingFillableTakerAmount = Number(
+      record.metaData.remainingFillableTakerAmount
+    );
 
-    const total = price * quantity;
+    const price = takerAmount / makerAmount;
+    const quantity = remainingFillableTakerAmount / makerAmount;
+    const total = remainingFillableTakerAmount;
 
-    const merchantOrder = {
-      price: parseFloat(price.toFixed(2)),
-      quantity: parseFloat(quantity.toFixed(2)),
-      total: parseFloat(total.toFixed(2)),
+    const parsedRecord = {
+      price,
+      quantity,
+      total,
     };
 
-    data.push(merchantOrder);
-  });
+    parsedData.push(parsedRecord);
+  }
 
-  return data;
+  return parsedData.sort((a, b) => a.price - b.price);
 };

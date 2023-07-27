@@ -1,31 +1,32 @@
 import { OrderBook } from "@/entities/orderbook";
-import { parseMerchantData } from "@/utils/orderbook";
+import { formatPrice, parseMerchantData } from "@/utils/orderbook";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 import { HiOutlineChevronLeft } from "react-icons/hi";
 
-export const OrderBookTable = ({
-  data,
-  goBack,
-}: {
-  data: OrderBook;
-  goBack: () => void;
-}) => {
+export const OrderBookTable = ({ data }: { data: OrderBook }) => {
   const buyers = parseMerchantData(data.bids.records);
   const sellers = parseMerchantData(data.asks.records);
 
-  return (
-    <div className="mx-auto mb-10 min-h-[70vh] w-full max-w-[800px]">
-      <button onClick={goBack} className="mb-4 flex items-center text-sm">
-        <span className="mr-2">
-          <HiOutlineChevronLeft />
-        </span>
-        Go Back
-      </button>
+  const router = useRouter();
+  let backPath = `/?tokens=${router.query.tokens}`;
 
-      <div className="h-full rounded-2xl border bg-white shadow-sm">
+  return (
+    <div className="mx-auto mb-10 min-h-[70vh] w-full">
+      <Link href={backPath}>
+        <button className="mb-4 flex items-center text-sm">
+          <span className="mr-2">
+            <HiOutlineChevronLeft />
+          </span>
+          Go Back
+        </button>
+      </Link>
+
+      <div className="h-full rounded-md border bg-white shadow-sm">
         <div className="flex h-full w-full">
           {/* buyers */}
-          <div className="w-1/2 border-r pt-6">
+          <div className="w-1/2 border-r pt-4">
             <table className="w-full table-auto">
               <thead>
                 <tr>
@@ -42,7 +43,7 @@ export const OrderBookTable = ({
               </thead>
 
               <tbody>
-                {buyers.map((buyer, index) => {
+                {buyers.slice(0, 10).map((buyer, index) => {
                   return (
                     <tr
                       key={index}
@@ -55,7 +56,7 @@ export const OrderBookTable = ({
                         {buyer.quantity}
                       </td>
                       <td className="py-2 pr-4 text-right text-sm">
-                        {buyer.total}
+                        {formatPrice(buyer.total)}
                       </td>
                     </tr>
                   );
@@ -65,7 +66,7 @@ export const OrderBookTable = ({
           </div>
 
           {/* sellers */}
-          <div className="w-1/2 pt-6">
+          <div className="w-1/2 pt-4">
             <table className="w-full table-auto">
               <thead>
                 <tr>
@@ -82,14 +83,14 @@ export const OrderBookTable = ({
               </thead>
 
               <tbody>
-                {sellers.map((seller, index) => {
+                {sellers.slice(0, 10).map((seller, index) => {
                   return (
                     <tr
                       key={index}
                       className="cursor-pointer transition-colors hover:bg-gray-50"
                     >
                       <td className="py-2 pl-4 text-left text-sm">
-                        {seller.total}
+                        {formatPrice(seller.total)}
                       </td>
                       <td className="py-2 text-left text-sm">
                         {seller.quantity}

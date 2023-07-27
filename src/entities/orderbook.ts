@@ -6,6 +6,12 @@ export interface Order {
 
 export interface RecordType {
   order: Order;
+  metaData: {
+    orderHash: string;
+    remainingFillableTakerAmount: string;
+    createdAt: Date;
+    state?: string;
+  };
 }
 
 interface Bids {
