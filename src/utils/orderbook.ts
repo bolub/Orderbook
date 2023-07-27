@@ -1,15 +1,10 @@
 import { RecordType } from "@/entities/orderbook";
 
-interface Merchant {
-  price: number;
-  quantity: number;
-  total: number;
-}
-
-const formatPrice = (arg: number): string => {
+export const formatPrice = (arg: number): string => {
   return arg.toLocaleString("en", {
     useGrouping: true,
     minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   });
 };
 
@@ -21,8 +16,8 @@ export const parseMerchantData = (records: RecordType[]) => {
   const parsedData = [];
 
   for (const record of records) {
-    const makerAmount = Number(record.order.makerAmount);
-    const takerAmount = Number(record.order.takerAmount);
+    const makerAmount = parseFloat(record.order.makerAmount);
+    const takerAmount = parseFloat(record.order.takerAmount);
     const remainingFillableTakerAmount = Number(
       record.metaData.remainingFillableTakerAmount
     );
@@ -40,5 +35,5 @@ export const parseMerchantData = (records: RecordType[]) => {
     parsedData.push(parsedRecord);
   }
 
-  return parsedData;
+  return parsedData.sort((a, b) => a.price - b.price);
 };
