@@ -1,5 +1,5 @@
 import { OrderBook } from "@/entities/orderbook";
-import { parseMerchantData } from "@/utils/orderbook";
+import { formatPrice, parseMerchantData } from "@/utils/orderbook";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
@@ -43,7 +43,7 @@ export const OrderBookTable = ({ data }: { data: OrderBook }) => {
               </thead>
 
               <tbody>
-                {buyers.map((buyer, index) => {
+                {buyers.slice(0, 10).map((buyer, index) => {
                   return (
                     <tr
                       key={index}
@@ -56,7 +56,7 @@ export const OrderBookTable = ({ data }: { data: OrderBook }) => {
                         {buyer.quantity}
                       </td>
                       <td className="py-2 pr-4 text-right text-sm">
-                        {buyer.total}
+                        {formatPrice(buyer.total)}
                       </td>
                     </tr>
                   );
@@ -66,7 +66,7 @@ export const OrderBookTable = ({ data }: { data: OrderBook }) => {
           </div>
 
           {/* sellers */}
-          <div className="w-1/2 pt-6">
+          <div className="w-1/2 pt-4">
             <table className="w-full table-auto">
               <thead>
                 <tr>
@@ -83,14 +83,14 @@ export const OrderBookTable = ({ data }: { data: OrderBook }) => {
               </thead>
 
               <tbody>
-                {sellers.map((seller, index) => {
+                {sellers.slice(0, 10).map((seller, index) => {
                   return (
                     <tr
                       key={index}
                       className="cursor-pointer transition-colors hover:bg-gray-50"
                     >
                       <td className="py-2 pl-4 text-left text-sm">
-                        {seller.total}
+                        {formatPrice(seller.total)}
                       </td>
                       <td className="py-2 text-left text-sm">
                         {seller.quantity}
