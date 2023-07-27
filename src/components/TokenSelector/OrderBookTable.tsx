@@ -12,8 +12,6 @@ export const OrderBookTable = ({ data }: { data: OrderBook }) => {
   const router = useRouter();
   let backPath = `/?tokens=${router.query.tokens}`;
 
-  console.log(data);
-
   return (
     <div className="mx-auto mb-10 min-h-[70vh] w-full">
       <Link href={backPath}>
