@@ -10,6 +10,7 @@ export interface RecordType {
     orderHash: string;
     remainingFillableTakerAmount: string;
     createdAt: Date;
+    state?: string;
   };
 }
 
