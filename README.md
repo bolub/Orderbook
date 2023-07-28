@@ -7,9 +7,9 @@
 
 ## Data needed to be displayed on frontend for a orderbook
 
-- price
-- quantity
-- total
+- Price
+- Quantity
+- Total
 
 For testing:
 USDC -> USDT
