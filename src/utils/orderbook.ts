@@ -18,13 +18,10 @@ export const parseMerchantData = (records: RecordType[]) => {
   for (const record of records) {
     const makerAmount = parseFloat(record.order.makerAmount);
     const takerAmount = parseFloat(record.order.takerAmount);
-    const remainingFillableTakerAmount = Number(
-      record.metaData.remainingFillableTakerAmount
-    );
 
     const price = takerAmount / makerAmount;
-    const quantity = remainingFillableTakerAmount / makerAmount;
-    const total = remainingFillableTakerAmount;
+    const quantity = makerAmount;
+    const total = price * quantity;
 
     const parsedRecord = {
       price,
