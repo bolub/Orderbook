@@ -32,7 +32,3 @@ export interface OrderBook {
   bids: Bids;
   asks: Asks;
 }
-
-// price = takerAmount / makerAmount
-// quantity === makerAmount
-// total = price * makerAmount
